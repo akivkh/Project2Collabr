@@ -1,0 +1,36 @@
+<center>Friend Data</center>
+<div ng-controller="FriendController">
+	<table class="table">
+		<tr><td>Friend Name</td><td>Operation</td></tr>
+		<tr ng-repeat="friend in acceptfrienddata">
+			<td>{{friend.friendloginname}}</td>
+			<td><input type="submit" value="Delete Request" ng-click="deleteFriend(friend.friendid)"/></td>
+		</tr>
+	</table>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- <center>Friend Data</center>
+<div ng-controller="FriendController">
+     <table class="table">
+          <tr>
+              <td>Friend Name</td>
+              <td>Operation</td>
+            </tr>  
+    
+    <tr ng-repeat="friend in acceptfrienddata">
+         <td>{{friend.friendloginname}}</td>
+         <td><input type="submit" value="Delete Request" ng-click="deleteFriend(friend.friendId)"/></td>
+    </tr>
+     </table>
+
+
+</div> -->

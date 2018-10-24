@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Collab</title>
+
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" 
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+
+<script src="assets/js/angular.min.js"></script>
+<script src="assets/js/angular-route.js"></script>
+<script src="assets/js/angular-cookies.js"></script>
+<script src="assets/js/mycode.js"></script>
+<script src="c_user/UserController.js"></script>
+<script src="c_forum/ForumController.js"></script>
+<script src="c_blog/BlogController.js"></script>
+<script src="c_friend/FriendController.js"></script>
+<script src="c_chat/ChatController.js"></script>
+<script src="c_chat/ChatService.js"></script>
+<script src="assets/js/lodash.js"></script>
+<script src="assets/js/stomp.js"></script>
+<script src="assets/js/sockjs.js"></script>
+<script src="c_job/JobController.js"></script>
+<link rel="stylesheet" href="assets/css/formStyle.css" />
+
+</head>
+<body ng-app="myApp">
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		<a class="navbar-brand" href="#!"><img
+			src="assets/images/banner.png"
+			style="height: 50px; width: 100px; position: relative; top: -14px;" /></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarCollapse" aria-controls="navbarCollapse"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link"
+					href="/collabFrontend/#!">Home</a></li>
+					<li class="nav-item dropdown">
+					<!--  <li class="nav-item dropdown" ng-show="currentUser.role=='USER'||currentUser.role=='ADMIN'"> -->
+					<a class="nav-link dropdown-toggle" href="#" id="job"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">job</a>
+					<div class="dropdown-menu" aria-labelledby="job">
+						<a class="dropdown-item" href="/collabFrontend/#!/addJob">addJob</a>
+						<a class="dropdown-item" href="/collabFrontend/#!/jobDetail">Job Detail
+							</a> <a class="dropdown-item"
+							href="/collabFrontend/#!/joblist">Job List</a>
+					</div>
+				</li>
+				<li class="nav-item"
+					ng-hide="currentUser.role=='Role_User'||currentUser.role=='Role_Admin'"><a
+					class="nav-link" href="/collabFrontend/#!/about">
+						AboutUs </a></li>
+				<li class="nav-item"
+					ng-hide="currentUser.role=='Role_User'||currentUser.role=='Role_Admin'"><a
+					class="nav-link" href="/collabFrontend/#!/contact">ContactUs</a></li>
+				<!-- 					<li class="nav-item"  ng-show="currentUser.role=='USER'||currentUser.role=='ADMIN'"><a class="nav-link" href="#!chat">Chat</a></li>
+ -->
+				<li class="nav-item"><a class="nav-link"
+					href="/collabFrontend/#!chat">Chat</a>&nbsp;&nbsp;</li>
+				<li class="nav-item"
+					ng-hide="currentUser.role=='USER'||currentUser.role=='Admin'">
+					<a class="nav-link" href="/collabFrontend/#!/login">  Login 
+				</a>
+				</li>
+				<li class="nav-item"
+					ng-hide="currentUser.role=='USER'||currentUser.role=='Admin'">
+					<a class="nav-link" href="/collabFrontend/#!/register"> Register
+				</a>
+				</li>
+				<li class="nav-item dropdown">
+					<!--  <li class="nav-item dropdown" ng-show="currentUser.role=='USER'||currentUser.role=='ADMIN'"> -->
+					<a class="nav-link dropdown-toggle" href="#" id="friend"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Friend</a>
+					<div class="dropdown-menu" aria-labelledby="friend">
+						<a class="dropdown-item" href="/collabFrontend/#!/friend">Friends</a>
+						<a class="dropdown-item" href="/collabFrontend/#!/suggestedFriend">Suggested
+							Friend</a> <a class="dropdown-item"
+							href="/collabFrontend/#!/pendingFriend">Pending Friend Request</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<!--  <li class="nav-item dropdown" ng-show="currentUser.role=='USER'||currentUser.role=='ADMIN'"> -->
+					<a class="nav-link dropdown-toggle" href="#" id="blog"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a> 
+					<div class="dropdown-menu" aria-labelledby="blog">
+						<a class="dropdown-item" href="/collabFrontend/#!/addBlog">Add
+							Blog</a> <a class="dropdown-item" href="/collabFrontend/#!/updateBlog">Update
+							Blog</a> <a class="dropdown-item" href="/collabFrontend/#!/blog">Show
+							Blog</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<!--  <li class="nav-item dropdown" ng-show="currentUser.role=='USER'||currentUser.role=='ADMIN'"> -->
+					<a class="nav-link dropdown-toggle" href="#!" id="forum"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a> 
+					<div class="dropdown-menu" aria-labelledby="forum">
+						<a class="dropdown-item" href="/collabFrontend/#!/addForum">Add
+							Forum</a> <a class="dropdown-item"
+							href="/collabFrontend/#!/updateForum">Update Forum</a> <a
+							class="dropdown-item" href="/collabFrontend/#!/forum">Show
+							Forum</a>
+					</div>
+				</li>
+
+			</ul>
+			 <span class="nav navbar-nav navbar-right dropdown" ng-hide="currentUser==undefined" style="padding-top:20px">
+				<p class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:#d32f2f;padding-top:10px; font-size:16px;margin-right: 60px;text-shadow: -2px 3px 7px #666; cursor: pointer;">Welcome {{currentUser.name}}
+        			<img id="img1" ng-hide="currentUser==undefined"  
+					src="http://localhost:8080/collabMiddleware/getImage/{{currentUser.email}}"
+					alt="avatar" onerror=this.src="assets/images/user.png" style="height: 50px; width: 50px;height: 50px;">
+					
+        				<span class="caret"></span></p>
+					<ul class="dropdown-menu" ng-controller="UserController">
+        				
+        					<li><a href="/collabFrontend/#!/displayProfile">View Profile</a></li>
+          					<li><a href="/collabFrontend/#!/updateProfile">Update Profile</a></li>
+        					<li><a href="/collabFrontend/#!/uploadProfilePicture">Upload Profile Picture</a></li>
+          					<li><a href="#" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> Log Out</a></li>
+          					
+          			</ul>
+          			</span>	
+          			
+		</div>
+	</nav>
+	<br />
+	<!-- Content -->
+	<div style="min-height: 550px;" ng-view></div>
+
+	<!-- Footer -->
+	<footer>
+		<div class="container-fluid"
+			style="background-color: #09496d; height: 40px; color: white; text-align: center; padding: 10px; position: fixed; bottom: 0px; width: 100%;">
+			<span>&copy; 2018 Copyright:CollaborationZone.com <a
+				href="http://www.facebook.com" class="fa fa-facebook"
+				style="font-size: 20px; color: #d6e5fc;"></a> <a
+				href="http://www.twitter.com" class="fa fa-twitter"
+				style="font-size: 20px; color: #d6e5fc;"></a> <a
+				href="http://www.instagram.com" class="fa fa-instagram"
+				style="font-size: 20px; color: #d6e5fc;"></a>
+			</span>
+		</div>
+	</footer>
+
+</body>
+</html>
