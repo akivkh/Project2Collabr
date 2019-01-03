@@ -68,23 +68,23 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean checkLogin(UserDetail user) {
+	public UserDetail checkLogin(UserDetail user) {
 		try {
 			Session session = sessionFactory.openSession();
 			Query query = session.createQuery("From UserDetail where email=:email and password=:password");
 			query.setParameter("email", user.getEmail());
 			query.setParameter("password", user.getPassword());
 			UserDetail userDetails = (UserDetail) query.list().get(0);
-			session.close();
+//			session.close();
 			if (userDetails == null) {
-				return false;
+				return null;
 			} else {
 
-				return true;
+				return userDetails;
 			}
 		} catch (Exception ex) {
 			System.out.println("Exception Occured:" + ex);
-			return false;
+			return null;
 		}
 	}
 

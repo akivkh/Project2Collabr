@@ -17,13 +17,15 @@ myApp.controller("ForumController", function($scope, $http, $location,$rootScope
 		
 		$http.get("http://localhost:8080/collabMiddleware/listForums").then(
 				function(response) {
-					console.log('Status text:' + response.statusText);
+					
+					alert('list of blogs');
+					/*console.log('Status text:' + response.statusText);*/
 					$scope.forumData = response.data;
-					console.log(response.data);
+					/*console.log(response.data);*/
 				});
 	};
 	$scope.editForum = function(forumId) {
-		console.log('In editForum method');
+		alert('In editForum method');
 		$http.get('http://localhost:8080/collabMiddleware/getForum/' + forumId)
 				.then( function(response) {
 					console.log('In edit forum');
@@ -35,7 +37,7 @@ myApp.controller("ForumController", function($scope, $http, $location,$rootScope
 	};
 
 	$scope.updateForum = function(forumId){
-		console.log('Entered into the updateForum method');
+		alert('Entered into the updateForum method');
 		console.log(forumId);
 		$http.put('http://localhost:8080/collabMiddleware/updateForum/'+ forumId, $scope.forum)
 		.then(fetchAllForums(), function(response){
@@ -48,7 +50,7 @@ myApp.controller("ForumController", function($scope, $http, $location,$rootScope
 		
 	};
 	$scope.deleteForum = function(forumId){
-		console.log('Entered into the deleteForum method');
+		alert('Entered into the deleteForum method');
 		$http.delete('http://localhost:8080/collabMiddleware/deleteForum/'+forumId)
 		.then(fetchAllForums(), function(response){
 			console.log('Forum deleted '+ forumId);

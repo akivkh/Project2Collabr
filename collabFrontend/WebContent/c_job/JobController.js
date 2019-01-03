@@ -3,9 +3,9 @@ myApp.controller('JobController',function($scope,$http,$location,$rootScope)
 	$scope.job={jobdesignation:'',jobDesc:'',location:'',salary:'',company:'',lastDateApply:''}
 	$scope.jobData;
 	$scope.insertJob =function(){
-		console.log('inside insert job');
+		alert('inside insert job');
 		$http.post('http://localhost:8080/collabMiddleware/addJob',$scope.job)
-		.then(fetchAllBlog(), function(response) {
+		.then(fetchAllJob(), function(response) {
 			/*$location.reload();*/
 			console.log('Status text:' + response.statusText);
 		
@@ -14,7 +14,7 @@ myApp.controller('JobController',function($scope,$http,$location,$rootScope)
 		};
 		function fetchAllJobs()
 		{
-			console.log('Fetch All Jobs');
+			alert('Fetch All Jobs');
 			$http.get("http://localhost:8080/collabMiddleware/listJob")
 			.then(function(response)
 			{
@@ -23,6 +23,7 @@ myApp.controller('JobController',function($scope,$http,$location,$rootScope)
 		};
 		
 		$scope.editJob = function(jobId) {
+		
 			$http.get('http://localhost:8080/collabMiddleware/getJob/' + jobId)
 					.then(function(response) {
 						console.log(response.status);

@@ -2,8 +2,6 @@ package com.niit.collabMiddleware.RestController;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.collabBackend.Dao.UserDao;
+import com.niit.collabBackend.model.ErrorClazz;
 import com.niit.collabBackend.model.UserDetail;
 
 @RestController
@@ -25,16 +26,36 @@ public class UserController {
 	
 
 	// ------------------CheckLogin-----------------
-	@PostMapping(value = "/login")
+	/*@PostMapping(value = "/login")
 	public ResponseEntity<UserDetail> checkLogin(@RequestBody UserDetail userDetail, HttpSession session) {
 		System.out.println("Inside user login.....!!");
-		if (userDao.checkLogin(userDetail)) {
+		if (userDao.checkLogin(userDetail)) 
+		{
 			UserDetail tempUser = (UserDetail) userDao.getUser(userDetail.getEmail());
 			userDao.updateOnlineStatus("Y", tempUser);
 			session.setAttribute("userRecord", tempUser);
 			return new ResponseEntity<UserDetail>(tempUser, HttpStatus.OK);
-		} else {
+		} 
+		else
+		 {
 			return new ResponseEntity<UserDetail>(userDetail, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}*/
+	
+	@RequestMapping(value="/login", method=RequestMethod.PUT)
+	public ResponseEntity<?>login(@RequestBody UserDetail user){
+		System.out.println("inside Login funnction..!");
+		UserDetail validUser=userDao.checkLogin(user);
+		if(validUser==null) {
+			ErrorClazz errorClazz=new ErrorClazz(4, "invalid email/password");
+		 return new ResponseEntity<ErrorClazz>(errorClazz,HttpStatus.UNAUTHORIZED);
+			
+		}
+		else
+		{
+			
+			
+				return new ResponseEntity<UserDetail>(validUser,HttpStatus.OK);
 		}
 	}
 

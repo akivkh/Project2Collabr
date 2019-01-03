@@ -29,7 +29,7 @@ myApp.service('ChatService',function($q,$timeout)
   	
   	var getMessage=function(date)
   	{
-  		var message=JSON.parse(data),out={};
+  		var message=JSON.parse(data).out={};
   		out.message=message.message;
   		out.time= new Date(message.time);
   		return out;

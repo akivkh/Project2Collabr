@@ -9,7 +9,7 @@ public interface UserDao {
 	public boolean updateUser(UserDetail user);
 	public boolean deleteUser(UserDetail user);
 	public UserDetail getUser(String userId);
-	public boolean checkLogin(UserDetail user);
+	public UserDetail checkLogin(UserDetail user);
 	public boolean updateOnlineStatus(String status, UserDetail user);
 	public List<UserDetail> listUser();
 	

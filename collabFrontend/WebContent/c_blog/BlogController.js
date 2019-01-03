@@ -4,17 +4,17 @@ myApp.controller("BlogController",function($scope,$http,$location)
 			$scope.blogData;
 			$scope.insertBlog = function(){
 				
-				console.log('inside insert Blog');
+				alert('inside insert Blog');
 				$http.post('http://localhost:8080/collabMiddleware/addBlog',$scope.blog)
 				.then(fetchAllBlog(), function(response) {
 					//$location.reload();
-					console.log('Status text:' + response.statusText);
+					alert('Status text:' + response.statusText);
 				});
 			};
 			
 			function fetchAllBlog()
 			{
-				console.log('Fetch All Blogs');
+				alert('Fetch All Blogs');
 				$http.get("http://localhost:8080/collabMiddleware/listBlog")
 				.then(function(response)
 				{
@@ -53,7 +53,7 @@ myApp.controller("BlogController",function($scope,$http,$location)
 				});
 			};
 			$scope.incrementLike = function(blogId) {
-				console.log('Into like increment');
+				alert('Into like increment');
 				$http.post(
 						'http://localhost:8080/collabMiddleware/incrementLikes/'
 								+ blogId, $scope.blog).then(fetchAllBlogs(),

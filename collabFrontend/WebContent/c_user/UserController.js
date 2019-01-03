@@ -3,15 +3,15 @@ myApp.controller("UserController",function($scope,$http,$location,$rootScope,$co
 	$scope.user={"name":'',"password":'',"email":'',"address":'',"phone":'',"role":'',"isOnline":''};
 	
 	   $scope.register=function(){
-		   console.log("Registration function");
+		   alert("Registration function");
 		   $http.post('http://localhost:8080/collabMiddleware/registerUser',$scope.user)
 		   .then(function(response){
 			   console.log('Status text:' +response.statusText);
-			   alert('Registe successfully...!!');
+			   alert('Register successfully...!!');
 		 });
  };
      $rootScope.login=function(){
-    	 console.log("Logging Function");
+    	 alert("Logging Function");
     	 $http.post("http://localhost:8080/collabMiddleware/login",$scope.user)
     	 .then(function(response){
     	       console.log(response.status);
